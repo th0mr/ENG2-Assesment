@@ -4,44 +4,46 @@ plugins {
 }
 
 version = "0.1"
-group = "com.video"
+group = "com.video.cli"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    annotationProcessor("io.micronaut.data:micronaut-data-processor")
-    annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("info.picocli:picocli-codegen")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
-    implementation("io.micronaut:micronaut-http-client")
-    implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
-    implementation("io.micronaut.kafka:micronaut-kafka")
-    implementation("io.micronaut.kafka:micronaut-kafka-streams")
+    implementation("info.picocli:picocli")
+    implementation("io.micronaut.picocli:micronaut-picocli")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
-    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("jakarta.annotation:jakarta.annotation-api")
     runtimeOnly("ch.qos.logback:logback-classic")
-    runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
+    implementation("io.micronaut:micronaut-http-client")
 }
 
 
 application {
-    mainClass.set("com.video.Application")
+    mainClass.set("com.video.cli.VideoCliCommand")
 }
-
 java {
     sourceCompatibility = JavaVersion.toVersion("11")
     targetCompatibility = JavaVersion.toVersion("11")
 }
 
-graalvmNative.toolchainDetection = false
 micronaut {
-    runtime("netty")
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("com.video.*")
+        annotations("com.video.cli.*")
+    }
+}
+
+
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("io.micronaut:micronaut-jackson-databind"))
+            .using(module("io.micronaut.serde:micronaut-serde-jackson:1.5.3"))
     }
 }
 
