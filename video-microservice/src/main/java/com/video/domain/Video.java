@@ -1,12 +1,18 @@
 package com.video.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.micronaut.serde.annotation.Serdeable;
@@ -22,24 +28,44 @@ public class Video {
 	@Column(nullable = false)
 	private String title;
 	
-	@Column(nullable = false)
-	private Long creatorId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name="creator_id")
+	private User creator;
 	
-	// Could this be nullable true?
-	@Column(nullable = false)
-	private String[] hashtags;
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "video_hashtags",
+            joinColumns = @JoinColumn(name = "video_id"),
+            inverseJoinColumns = @JoinColumn(name = "hashtag_id")
+    )
+    private Set<Hashtag> hashtags = new HashSet<>();
 
 	@JsonIgnore
-	@ManyToMany
-	private Set<User> viewers;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			name="video_viewers",
+			joinColumns = @JoinColumn(name = "video_id"),
+			inverseJoinColumns = @JoinColumn(name = "user_id")
+	)
+	private Set<User> viewers = new HashSet<>();
 	
 	@JsonIgnore
-	@ManyToMany
-	private Set<User> likers;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+			name="video_likers",
+			joinColumns = @JoinColumn(name = "video_id"),
+			inverseJoinColumns = @JoinColumn(name = "user_id")
+	)
+	private Set<User> likers = new HashSet<>();
 	
 	@JsonIgnore
-	@ManyToMany
-	private Set<User> dislikers;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(
+            name = "video_dislikers",
+            joinColumns = @JoinColumn(name = "video_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+	private Set<User> dislikers = new HashSet<>();
 	
 	public Long getId() {
 		return id;
@@ -57,20 +83,19 @@ public class Video {
 		this.title = title;
 	}
 	
-	public Long getCreatorId() {
-		return creatorId;
+	public User getCreator() {
+		return creator;
 	}
 
-	// Using ID to set creator
-	public void setCreatorId(Long creatorId) {
-		this.creatorId = creatorId;
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
 	
-	public String[] getHashtags(){
+	public Set<Hashtag> getHashtags(){
 		return hashtags;
 	}
 	
-	public void setHashtags(String[] hashtags) {
+	public void setHashtags(Set<Hashtag> hashtags) {
 		this.hashtags = hashtags;
 	}
 	
@@ -100,7 +125,7 @@ public class Video {
 
 	@Override
 	public String toString() {
-		return "Video [ID=" + id + ", title=" + title + ", creatorId=" + creatorId + ", hashtags=" + hashtags.toString() + "]";
+		return "Video [ID=" + id + ", title=" + title + ", creator=" + creator.toString() + "]";
 	}
 	
 }

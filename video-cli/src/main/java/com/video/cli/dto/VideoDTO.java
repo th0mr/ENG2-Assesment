@@ -1,13 +1,19 @@
 package com.video.cli.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.video.cli.domain.Hashtag;
+import com.video.cli.domain.User;
+
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
 public class VideoDTO {
 
 	private String title;
-	private Long creatorId;
-	private String[] hashtags;
+	private long creatorId;
+	private String hashtagString;
 
 	public String getTitle() {
 		return title;
@@ -17,25 +23,25 @@ public class VideoDTO {
 		this.title = title;
 	}
 
-	public Long getCreatorId() {
+	@Override
+	public String toString() {
+		return "VideoDTO [title=" + title + "]";
+	}
+
+	public long getCreatorId() {
 		return creatorId;
 	}
 
-	public void setCreatorId(Long creatorId) {
+	public void setCreatorId(long creatorId) {
 		this.creatorId = creatorId;
 	}
 
-	public String[] getHashtags(){
-		return hashtags;
+	public String getHashtagString() {
+		return hashtagString;
 	}
-	
-	public void setHashtags(String[] hashtags) {
-		this.hashtags = hashtags;
-	}
-	
-	@Override
-	public String toString() {
-		return "VideoDTO [title=" + title + ", creatorId=" + creatorId + ", hashtags=" + hashtags.toString() + "]";
+
+	public void setHashtagString(String hashtagString) {
+		this.hashtagString = hashtagString;
 	}
 }
 

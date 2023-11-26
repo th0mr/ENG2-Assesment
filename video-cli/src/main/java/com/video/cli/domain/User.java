@@ -1,8 +1,5 @@
 package com.video.cli.domain;
 
-
-import java.util.Set;
-
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable

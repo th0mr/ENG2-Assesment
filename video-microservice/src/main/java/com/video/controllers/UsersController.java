@@ -6,7 +6,9 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import com.video.domain.Hashtag;
 import com.video.domain.User;
+import com.video.domain.Video;
 import com.video.dto.UserDTO;
 import com.video.repositories.UsersRepository;
 
@@ -40,8 +42,8 @@ public class UsersController {
 	}
 
 	@Get("/{id}")
-	public UserDTO getUser(long id) {
-		return repo.findOne(id).orElse(null);
+	public User getUser(long id) {
+		return repo.findById(id).orElse(null);
 	}
 
 	@Transactional
@@ -70,6 +72,46 @@ public class UsersController {
 
 		repo.delete(user.get());
 		return HttpResponse.ok();
+	}
+	
+	@Transactional
+	@Get("/{id}/videos")
+	public Iterable<Video> getVideos(long id) {
+		Optional<User> user = repo.findById(id);
+		if (user.isEmpty()) {
+			return null;
+		}
+		return user.get().getVideos();
+	}
+	
+	@Transactional
+	@Get("/{id}/liked")
+	public Iterable<Video> getLikedVideos(long id) {
+		Optional<User> user = repo.findById(id);
+		if (user.isEmpty()) {
+			return null;
+		}
+		return user.get().getLikedVideos();
+	}
+	
+	@Transactional
+	@Get("/{id}/disliked")
+	public Iterable<Video> getDislikedVideos(long id) {
+		Optional<User> user = repo.findById(id);
+		if (user.isEmpty()) {
+			return null;
+		}
+		return user.get().getDislikedVideos();
+	}
+	
+	@Transactional
+	@Get("/{id}/watched")
+	public Iterable<Video> getWatchedVideos(long id) {
+		Optional<User> user = repo.findById(id);
+		if (user.isEmpty()) {
+			return null;
+		}
+		return user.get().getWatchedVideos();
 	}
 
 }

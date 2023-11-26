@@ -24,5 +24,5 @@ public interface VideosProducer {
 	void dislikedVideo(@KafkaKey Long userId, Video v);
 	
 	@Topic(TOPIC_POSTED)
-	void postedVideo(Video v);
+	void postedVideo(@KafkaKey Long userId, Video v);
 }

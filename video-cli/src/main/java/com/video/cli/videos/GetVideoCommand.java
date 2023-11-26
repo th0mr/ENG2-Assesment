@@ -17,12 +17,12 @@ public class GetVideoCommand implements Runnable {
 
 	@Override
 	public void run() {
-		VideoDTO book = client.getVideo(id);
-		if (book == null) {
-			System.err.println("Book not found!");
+		VideoDTO video = client.getVideo(id);
+		if (video == null) {
+			System.err.println("video not found!");
 			System.exit(1);
 		} else {
-			System.out.println(book);
+			System.out.println(video);
 		}
 	}
 

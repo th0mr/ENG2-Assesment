@@ -2,6 +2,9 @@ package com.video.cli.domain;
 
 import java.util.Set;
 
+import com.video.cli.domain.Hashtag;
+import com.video.cli.domain.User;
+
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable
@@ -11,10 +14,10 @@ public class Video {
 	
 	private String title;
 	
-	private Long creatorId;
+	private User creator;
 	
-	private String[] hashtags;
-	
+	private Set<Hashtag> hashtags;
+
 	public Long getId() {
 		return id;
 	}
@@ -31,26 +34,25 @@ public class Video {
 		this.title = title;
 	}
 	
-	public Long getCreatorId() {
-		return creatorId;
+	public User getCreator() {
+		return creator;
 	}
 
-	// Using ID to set creator
-	public void setCreatorId(Long creatorId) {
-		this.creatorId = creatorId;
+	public void setCreator(User creator) {
+		this.creator = creator;
 	}
-	
-	public String[] getHashtags(){
+
+	public Set<Hashtag> getHashtags() {
 		return hashtags;
 	}
-	
-	public void setHashtags(String[] hashtags) {
+
+	public void setHashtags(Set<Hashtag> hashtags) {
 		this.hashtags = hashtags;
 	}
 
 	@Override
 	public String toString() {
-		return "Video [ID=" + id + ", title=" + title + ", creatorId=" + creatorId + ", hashtags=" + hashtags.toString() + "]";
+		return "Video [ID=" + id + ", title=" + title + ", creatorId=" + creator.toString() + ", hashtags=" + hashtags.toString() + "]";
 	}
 	
 }

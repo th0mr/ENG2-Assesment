@@ -30,6 +30,14 @@ public interface VideosClient {
 	@Delete("/{id}")
 	HttpResponse<Void> deleteVideo(long id);
 
+	// Creator
+	
+	@Get("/{id}/creator")
+	public Iterable<User> getCreator(long id);
+
+	@Put("/{videoId}/creator/{userId}")
+	public HttpResponse<String> setCreator(long videoId, long userId);
+	
 	// Viewers
 	
 	@Get("/{id}/viewers")

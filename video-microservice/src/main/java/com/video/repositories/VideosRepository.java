@@ -14,12 +14,9 @@ import io.micronaut.data.repository.CrudRepository;
 @Repository
 public interface VideosRepository extends CrudRepository<Video, Long> {
 	
-	@Join(value = "viewers", type = Join.Type.LEFT_FETCH)
-	@Join(value = "dislikers", type = Join.Type.LEFT_FETCH)
-	@Join(value = "likers", type = Join.Type.LEFT_FETCH)
 	@Override
 	Optional<Video> findById(@NotNull Long id);
 
-	Optional<VideoDTO> findOne(long id);
+	Optional<Video> findOne(long id);
 
 }

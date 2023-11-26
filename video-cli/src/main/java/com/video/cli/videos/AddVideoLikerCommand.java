@@ -3,7 +3,6 @@ package com.video.cli.videos;
 import io.micronaut.http.HttpResponse;
 import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 @Command(name="add-video-liker", description="Adds a user as a liker to a video", mixinStandardHelpOptions = true)
