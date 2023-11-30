@@ -78,23 +78,23 @@ public class VideosController {
 			videosProducer.postedVideo(user.getId(), savedVideo);
 		}
         
-		// Set hashtags
-		
 		String hashtagString = videoDetails.getHashtagString();
-		// Split the string by commas
-        String[] hashtagsArray = hashtagString.split(",");
+		// Set hashtags
+		if (hashtagString != null) {
+			// Split the string by commas
+	        String[] hashtagsArray = hashtagString.split(",");
 
-        // Iterate through each hashtag and find the actual Hashtag entity (creating it if it does not exist)
-        for (String hashtagName : hashtagsArray) {
-        	HashtagDTO hashDTO = new HashtagDTO();
-        	hashDTO.setName(hashtagName);
-        	// At the controller level, logic is checking that this is not producing duplicate hashtags with the same name
-        	hashtagController.add(hashDTO);
-        	// Now obtain the hashtag we've created
-        	Hashtag hash = hashtagRepo.findByName(hashtagName).orElse(null);
-        	addHashtag(savedVideo.getId(), hash.getId());
-        }
-		
+	        // Iterate through each hashtag and find the actual Hashtag entity (creating it if it does not exist)
+	        for (String hashtagName : hashtagsArray) {
+	        	HashtagDTO hashDTO = new HashtagDTO();
+	        	hashDTO.setName(hashtagName);
+	        	// At the controller level, logic is checking that this is not producing duplicate hashtags with the same name
+	        	hashtagController.add(hashDTO);
+	        	// Now obtain the hashtag we've created
+	        	Hashtag hash = hashtagRepo.findByName(hashtagName).orElse(null);
+	        	addHashtag(savedVideo.getId(), hash.getId());
+	        }
+		}
         
 		return HttpResponse.created(uri);
 	}

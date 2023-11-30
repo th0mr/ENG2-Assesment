@@ -50,7 +50,6 @@ services:
       - KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka-0 -Dcom.sun.management.jmxremote.rmi.port=9997
     volumes:
       - kafka_0_data:/bitnami/kafka
-
   kafka-1:
     image: docker.io/bitnami/kafka:3.5
     ports:
