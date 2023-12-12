@@ -1,6 +1,0 @@
-applicationType: cli
-defaultPackage: com.video.cli
-testFramework: junit
-sourceLanguage: java
-buildTool: gradle
-features: [annotation-api, app-name, gradle, http-client, java, junit, logback, micronaut-build, picocli, picocli-java-application, picocli-junit, readme, serialization-jackson, shade, yaml]
