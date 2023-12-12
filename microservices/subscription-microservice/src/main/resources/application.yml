@@ -1,0 +1,29 @@
+micronaut:
+  application:
+    name: subscriptionMicroservice
+  server:
+    port: 8082
+datasources:
+  default:
+    driver-class-name: org.mariadb.jdbc.Driver
+    db-type: mariadb
+    dialect: MYSQL
+    url: jdbc:mariadb://localhost:3306/videos
+    username: todo
+    password: todosecret
+jpa:
+  default:
+    entity-scan:
+       packages:
+          - com.thm.domain
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+kafka:
+    bootstrap:
+        servers: ${KAFKA_BOOTSTRAP_SERVERS:`localhost:9094`}
+netty:
+  default:
+    allocator:
+      max-order: 3

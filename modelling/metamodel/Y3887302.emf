@@ -1,0 +1,44 @@
+@namespace(uri="microserviceArchitecture", prefix="")
+package microserviceArchitecture;
+
+class Application {
+	val Microservice[*] microservices;
+}
+
+class Microservice {
+	attr String name;
+	val EventStream[*] consumers;
+	val Event[*] publishes;
+	val HttpClient[*] client;
+}
+
+class HttpClient {
+	attr String urlName;
+	val HttpMethod[*] methods;
+}
+
+class HttpMethod {
+	attr String methodName;
+	attr MethodType type;
+}
+
+class EventStream {
+	attr String streamName;
+	val Event[*] consumes;
+}
+
+class Event {
+	attr String topicName;
+	attr String keyType;
+	attr String valueType;
+	attr String key;
+	attr String value;
+}
+
+enum MethodType {
+	Post = 0;
+	Get = 1;
+	Delete = 2;
+	Put = 3;
+}
+
