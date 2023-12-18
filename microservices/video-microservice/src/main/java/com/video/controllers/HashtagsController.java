@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 
 @Controller("/hashtags")
-public class HashtagController {
+public class HashtagsController {
 
     @Inject
     private HashtagRepository repo;

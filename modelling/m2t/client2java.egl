@@ -1,0 +1,17 @@
+[* Set content type to java, which makes protected regions have java comments *]
+[% out.setContentType("Java"); %]
+[%=out.preserve("packageDefinition", true, "package todo")%]
+
+@Controller("/[%=client.urlName%]")
+public class [%=client.urlName.substring(0,1).toUpperCase() + client.urlName.substring(1)%]Controller {
+
+	[%=out.preserve("classVariables", true, "// Declare variables here...")%]
+[%for (method in client.methods){%]
+
+	@[%=method.type%]("TODO")
+	public [%=method.returnType%] [%=method.methodName%]([%=method.parameters.collect(p|p.parameterType + " " + p.parameterName).concat(", ")%]) {
+		[%=out.preserve("methodContents", true, "System.out.println('Method is not implemented');")%]
+	}
+	[%}%]
+
+}

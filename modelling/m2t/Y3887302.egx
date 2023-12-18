@@ -1,0 +1,38 @@
+pre {
+  var outDirLib : String = "./testing/";
+} 
+
+rule client2java transform client : HttpClient{
+	
+	template : "./client2java.egl"
+	
+	parameters : Map{"client"=client}
+	
+	target {
+    	var outFile = outDirLib + client.urlName.substring(0,1).toUpperCase() + client.urlName.substring(1) + "Controller";
+    	return outFile + ".java";
+  	}
+}
+
+// Transforms events from each microservice into a single producer file
+rule producers2java transform microservice : Microservice{
+	
+	pre {
+		var strippedName;
+		if (microservice.name.endsWith("Microservice")){
+			strippedName = microservice.name.substring(0, microservice.name.length() - 12);
+		} else {
+			strippedName = microservice.name;
+		}
+	}
+	
+	template : "./producer2java.egl"
+	
+	parameters : Map{"microservice"=microservice,
+					 "strippedName"=strippedName}
+	
+	target {
+    	var outFile = outDirLib + microservice.name + "/src/main/java/com/" + strippedName + "/events/" + strippedName + "Producer";
+    	return outFile + ".java";
+  	}
+}

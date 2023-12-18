@@ -12,7 +12,7 @@ import com.video.domain.User;
 import com.video.domain.Video;
 import com.video.dto.HashtagDTO;
 import com.video.dto.VideoDTO;
-import com.video.events.VideosProducer;
+import com.video.events.VideoProducer;
 import com.video.repositories.HashtagRepository;
 import com.video.repositories.UsersRepository;
 import com.video.repositories.VideosRepository;
@@ -70,7 +70,6 @@ public class VideosController {
 		}
 		video.setCreator(user);
 
-		// TODO : Add some check that this has happened + check return value
 		URI uri = URI.create("/videos/" + video.getId());
         Video savedVideo = repo.save(video);
 		

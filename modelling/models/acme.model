@@ -1,33 +1,126 @@
 <?xml version="1.0" encoding="ASCII"?>
-<Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="microserviceArchitecture" xmi:id="_1gXi8Jg2Ee6R976uG3FrWg">
-  <microservices xmi:id="_2vwHMJg2Ee6R976uG3FrWg" name="Video Microservice">
-    <consumers xmi:id="_Qh3aYJg3Ee6R976uG3FrWg" streamName="video-watched"/>
-    <publishes xmi:id="_E2pJYJg3Ee6R976uG3FrWg" topicName="video-watched" keyType="Long" valueType="Video" key="userId" value="v"/>
-    <publishes xmi:id="_J0PEwJg3Ee6R976uG3FrWg" topicName="video-posted" keyType="Long" valueType="Video" key="userId" value="v"/>
-    <publishes xmi:id="_KM1K8Jg3Ee6R976uG3FrWg" topicName="video-disliked" keyType="Long" valueType="Video" key="userId" value="v"/>
-    <publishes xmi:id="_KW_MgJg3Ee6R976uG3FrWg" topicName="video-liked" keyType="Long" valueType="Video" key="userId" value="v"/>
-    <client xmi:id="__vlwAJg2Ee6R976uG3FrWg" urlName="videos">
-      <methods xmi:id="_AuIb4Jg3Ee6R976uG3FrWg" methodName="add"/>
-      <methods xmi:id="_i6kQAJg3Ee6R976uG3FrWg" methodName="getVideo" type="Get"/>
-      <methods xmi:id="_jICrUJg3Ee6R976uG3FrWg" methodName="updateVideo" type="Put"/>
-      <methods xmi:id="_jPySEJg3Ee6R976uG3FrWg" methodName="deleteVideo" type="Delete"/>
-      <methods xmi:id="_jYW_QJg3Ee6R976uG3FrWg" methodName="getHashtags" type="Get"/>
-      <methods xmi:id="_jfzrEJg3Ee6R976uG3FrWg" methodName="addHashtag" type="Put"/>
-      <methods xmi:id="_jm6_sJg3Ee6R976uG3FrWg" methodName="getViewers" type="Get"/>
-      <methods xmi:id="_j01f4Jg3Ee6R976uG3FrWg" methodName="addViewer" type="Put"/>
-      <methods xmi:id="_AHIQ0Jg4Ee6R976uG3FrWg" methodName="removeViewer" type="Delete"/>
-      <methods xmi:id="_D0wZIJg4Ee6R976uG3FrWg" methodName="getLikers" type="Get"/>
-      <methods xmi:id="_D_LgcJg4Ee6R976uG3FrWg" methodName="getDislikers" type="Get"/>
-      <methods xmi:id="_EIEWsJg4Ee6R976uG3FrWg" methodName="addLiker" type="Put"/>
-      <methods xmi:id="_ERIMEJg4Ee6R976uG3FrWg" methodName="addDisliker" type="Put"/>
-      <methods xmi:id="_Eatl4Jg4Ee6R976uG3FrWg" methodName="removeDisliker" type="Delete"/>
-      <methods xmi:id="_QIusMJg4Ee6R976uG3FrWg" methodName="removeLiker" type="Delete"/>
-      <methods xmi:id="_QRMrsJg4Ee6R976uG3FrWg" methodName="getViewers" type="Get"/>
-      <methods xmi:id="_QlgHwJg4Ee6R976uG3FrWg" methodName="getViewers" type="Get"/>
-    </client>
-    <client xmi:id="_ASUpoJg3Ee6R976uG3FrWg" urlName="users"/>
-    <client xmi:id="_Bp12MJg3Ee6R976uG3FrWg" urlName="hashtags"/>
+<Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="microserviceArchitecture" xmi:id="_JCEikJjoEe6fbNeXgPK52A">
+  <microservices xmi:id="_R4leAJjtEe6fbNeXgPK52A" name="VideoMicroservice" consumesFrom="_RIuuYJjtEe6fbNeXgPK52A">
+    <produces xmi:id="_MWAFkJj1Ee6fbNeXgPK52A" name="watchedVideo" sentTo="_RIuuYJjtEe6fbNeXgPK52A" eventType="_LJHbsJj1Ee6fbNeXgPK52A"/>
+    <produces xmi:id="_O4KgUJj1Ee6fbNeXgPK52A" name="postedVideo" sentTo="_VARnsJjtEe6fbNeXgPK52A" eventType="_K0pnkJj1Ee6fbNeXgPK52A"/>
+    <produces xmi:id="_QnK_0Jj1Ee6fbNeXgPK52A" name="likedVideo" sentTo="_VXTnoJjtEe6fbNeXgPK52A" eventType="_K_HyMJj1Ee6fbNeXgPK52A"/>
+    <produces xmi:id="_S-NvsJj1Ee6fbNeXgPK52A" name="dislikedVideo" sentTo="_VH9kEJjtEe6fbNeXgPK52A" eventType="_LJHbsJj1Ee6fbNeXgPK52A"/>
+    <clients xmi:id="__vlwAJg2Ee6R976uG3FrWg" urlName="videos">
+      <methods xmi:id="_AuIb4Jg3Ee6R976uG3FrWg" methodName="add" returnType="HttpResonse&lt;Void>">
+        <parameters xmi:id="_Ty5CAJkCEe6fbNeXgPK52A" parameterName="videoDetails" parameterType="VideoDTO"/>
+      </methods>
+      <methods xmi:id="_i6kQAJg3Ee6R976uG3FrWg" methodName="getVideo" type="Get" returnType="Video">
+        <parameters xmi:id="_VzC74JkCEe6fbNeXgPK52A" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_jICrUJg3Ee6R976uG3FrWg" methodName="updateVideo" type="Put" returnType="HttpResonse&lt;Void>">
+        <parameters xmi:id="_gHPIgJkCEe6fbNeXgPK52A" parameterName="video" parameterType="VideoDTO"/>
+        <parameters xmi:id="_kME28JkCEe6fbNeXgPK52A" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_jPySEJg3Ee6R976uG3FrWg" methodName="deleteVideo" type="Delete" returnType="HttpResonse&lt;Void>">
+        <parameters xmi:id="_lFJM8JkCEe6fbNeXgPK52A" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_jYW_QJg3Ee6R976uG3FrWg" methodName="getHashtags" type="Get" returnType="Iterable&lt;Hashtag>">
+        <parameters xmi:id="_ldZ78JkCEe6fbNeXgPK52A" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_jfzrEJg3Ee6R976uG3FrWg" methodName="addHashtag" type="Put" returnType="HttpResonse&lt;String>">
+        <parameters xmi:id="_myuwIJkCEe6fbNeXgPK52A" parameterName="videoId" parameterType="long"/>
+        <parameters xmi:id="_pKxlkJkCEe6fbNeXgPK52A" parameterName="hashtagId" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_jm6_sJg3Ee6R976uG3FrWg" methodName="getViewers" type="Get" returnType="Iterable&lt;User>">
+        <parameters xmi:id="_rYKDIJkCEe6fbNeXgPK52A" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_j01f4Jg3Ee6R976uG3FrWg" methodName="addViewer" type="Put" returnType="HttpResonse&lt;String>">
+        <parameters xmi:id="_sGkBQJkCEe6fbNeXgPK52A" parameterName="videoId" parameterType="long"/>
+        <parameters xmi:id="_sl5ooJkCEe6fbNeXgPK52A" parameterName="userId" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_AHIQ0Jg4Ee6R976uG3FrWg" methodName="removeViewer" type="Delete" returnType="HttpResonse&lt;String>">
+        <parameters xmi:id="_weu7YJkCEe6fbNeXgPK52A" parameterName="videoId" parameterType="long"/>
+        <parameters xmi:id="_wsH3IJkCEe6fbNeXgPK52A" parameterName="userId" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_D0wZIJg4Ee6R976uG3FrWg" methodName="getLikers" type="Get" returnType="Iterable&lt;User>">
+        <parameters xmi:id="_xu3GgJkCEe6fbNeXgPK52A" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_D_LgcJg4Ee6R976uG3FrWg" methodName="getDislikers" type="Get" returnType="Iterable&lt;User>">
+        <parameters xmi:id="_x8IGcJkCEe6fbNeXgPK52A" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_EIEWsJg4Ee6R976uG3FrWg" methodName="addLiker" type="Put" returnType="HttpResonse&lt;String>">
+        <parameters xmi:id="_yvYIUJkCEe6fbNeXgPK52A" parameterName="videoId" parameterType="long"/>
+        <parameters xmi:id="_zP-7AJkCEe6fbNeXgPK52A" parameterName="userId" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_ERIMEJg4Ee6R976uG3FrWg" methodName="addDisliker" type="Put" returnType="HttpResonse&lt;String>">
+        <parameters xmi:id="_0rnLgJkCEe6fbNeXgPK52A" parameterName="videoId" parameterType="long"/>
+        <parameters xmi:id="_0CPeYJkCEe6fbNeXgPK52A" parameterName="userId" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_Eatl4Jg4Ee6R976uG3FrWg" methodName="removeDisliker" type="Delete" returnType="HttpResonse&lt;String>">
+        <parameters xmi:id="_3mck8JkCEe6fbNeXgPK52A" parameterName="videoId" parameterType="long"/>
+        <parameters xmi:id="_3mck8ZkCEe6fbNeXgPK52A" parameterName="userId" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_QIusMJg4Ee6R976uG3FrWg" methodName="removeLiker" type="Delete" returnType="HttpResonse&lt;String>">
+        <parameters xmi:id="_3zneQJkCEe6fbNeXgPK52A" parameterName="videoId" parameterType="long"/>
+        <parameters xmi:id="_3zneQZkCEe6fbNeXgPK52A" parameterName="userId" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_6iCaEJkHEe6fbNeXgPK52A" methodName="list" type="Get" returnType="Iterable&lt;Video>"/>
+    </clients>
+    <clients xmi:id="_DmSpcJ2VEe6VjPwt-gxfIA" urlName="users">
+      <methods xmi:id="_FfyhsJ2VEe6VjPwt-gxfIA" methodName="list" type="Get" returnType="Iterable&lt;User>"/>
+      <methods xmi:id="_KqQbcJ2VEe6VjPwt-gxfIA" methodName="add" returnType="HttpResonse&lt;Void>">
+        <parameters xmi:id="_xkdmQJ2VEe6VjPwt-gxfIA" parameterName="userDetails" parameterType="UserDTO"/>
+      </methods>
+      <methods xmi:id="_OfnjcJ2VEe6VjPwt-gxfIA" methodName="getUser" type="Get" returnType="User">
+        <parameters xmi:id="_wf9cUJ2VEe6VjPwt-gxfIA" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_R-Ue8J2VEe6VjPwt-gxfIA" methodName="updateUser" type="Put" returnType="HttpResonse&lt;Void>">
+        <parameters xmi:id="_tWOrQJ2VEe6VjPwt-gxfIA" parameterName="id" parameterType="long"/>
+        <parameters xmi:id="_uD30YJ2VEe6VjPwt-gxfIA" parameterName="userDetails" parameterType="UserDTO"/>
+      </methods>
+      <methods xmi:id="_WWrmUJ2VEe6VjPwt-gxfIA" methodName="deleteUser" type="Delete" returnType="HttpResponse&lt;Void>">
+        <parameters xmi:id="_stQmwJ2VEe6VjPwt-gxfIA" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_Z_DbMJ2VEe6VjPwt-gxfIA" methodName="getVideos" type="Get" returnType="Iterable&lt;Video>">
+        <parameters xmi:id="_sNIVMJ2VEe6VjPwt-gxfIA" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_dcX2oJ2VEe6VjPwt-gxfIA" methodName="getLikedVideos" type="Get" returnType="Iterable&lt;Video>">
+        <parameters xmi:id="_sCOswJ2VEe6VjPwt-gxfIA" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_gdAWEJ2VEe6VjPwt-gxfIA" methodName="getDislikedVideos" type="Get" returnType="Iterable&lt;Video>">
+        <parameters xmi:id="_rXu-QJ2VEe6VjPwt-gxfIA" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_j7UQAJ2VEe6VjPwt-gxfIA" methodName="getWatchedVideos" type="Get" returnType="Iterable&lt;Video>">
+        <parameters xmi:id="_p170UJ2VEe6VjPwt-gxfIA" parameterName="id" parameterType="long"/>
+      </methods>
+    </clients>
+    <clients xmi:id="_8SqOUJ2VEe6VjPwt-gxfIA" urlName="hashtags">
+      <methods xmi:id="_P0gA0J2XEe6VjPwt-gxfIA" methodName="list" type="Get" returnType="Iterable&lt;Hashtag>"/>
+      <methods xmi:id="_Y9MDoJ2XEe6VjPwt-gxfIA" methodName="add" returnType="HttpResonse&lt;Void>">
+        <parameters xmi:id="_nuKkoJ2XEe6VjPwt-gxfIA" parameterName="hashtagDetails" parameterType="HashtagDTO"/>
+      </methods>
+      <methods xmi:id="_bIDYsJ2XEe6VjPwt-gxfIA" methodName="getHashtag" type="Get" returnType="Hashtag">
+        <parameters xmi:id="_lwU-8J2XEe6VjPwt-gxfIA" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_dZIDcJ2XEe6VjPwt-gxfIA" methodName="deleteHashtag" type="Delete" returnType="HttpResonse&lt;Void>">
+        <parameters xmi:id="_k0S0gJ2XEe6VjPwt-gxfIA" parameterName="id" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_fXLEgJ2XEe6VjPwt-gxfIA" methodName="getVideos" returnType="Iterable&lt;Video>">
+        <parameters xmi:id="_kcpJgJ2XEe6VjPwt-gxfIA" parameterName="id" parameterType="long"/>
+      </methods>
+    </clients>
   </microservices>
-  <microservices xmi:id="_5eWbcJg2Ee6R976uG3FrWg" name="Trending Hashtag Microservice"/>
-  <microservices xmi:id="_9XhscJg2Ee6R976uG3FrWg" name="Subscriptions Microservice"/>
+  <microservices xmi:id="_SLfL4JjtEe6fbNeXgPK52A" name="TrendingHashtagMicroservice" consumesFrom="_VXTnoJjtEe6fbNeXgPK52A _VH9kEJjtEe6fbNeXgPK52A">
+    <clients xmi:id="__ipewJ2dEe6VjPwt-gxfIA" urlName="trendingHashtags">
+      <methods xmi:id="_W71LsJ2eEe6VjPwt-gxfIA" methodName="list" type="Get" returnType="List&lt;HashLikesPair>"/>
+    </clients>
+  </microservices>
+  <microservices xmi:id="_zVjHkJjuEe6fbNeXgPK52A" name="SubscriptionMicroservice"/>
+  <streams xmi:id="_RIuuYJjtEe6fbNeXgPK52A" streamName="video-watched" eventsRecieved="_MWAFkJj1Ee6fbNeXgPK52A" consumers="_R4leAJjtEe6fbNeXgPK52A">
+    <eventType xmi:id="_LJHbsJj1Ee6fbNeXgPK52A" keyType="Long" valueType="Video" key="userId" value="v"/>
+  </streams>
+  <streams xmi:id="_VARnsJjtEe6fbNeXgPK52A" streamName="video-posted" eventsRecieved="_O4KgUJj1Ee6fbNeXgPK52A">
+    <eventType xmi:id="_K_HyMJj1Ee6fbNeXgPK52A" keyType="Long" valueType="Video" key="userId" value="v"/>
+  </streams>
+  <streams xmi:id="_VH9kEJjtEe6fbNeXgPK52A" streamName="video-disliked" eventsRecieved="_S-NvsJj1Ee6fbNeXgPK52A">
+    <eventType xmi:id="_K0pnkJj1Ee6fbNeXgPK52A" keyType="Long" valueType="Video" key="userId" value="v"/>
+  </streams>
+  <streams xmi:id="_VXTnoJjtEe6fbNeXgPK52A" streamName="video-liked" eventsRecieved="_QnK_0Jj1Ee6fbNeXgPK52A">
+    <eventType xmi:id="_HtY7sJj1Ee6fbNeXgPK52A" keyType="Long" valueType="Video" key="userId" value="v"/>
+  </streams>
 </Application>

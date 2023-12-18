@@ -1,0 +1,18 @@
+[% out.setContentType("Java"); %]
+[%=out.preserve("packageDefinition", true, "package todo")%]
+
+import io.micronaut.configuration.kafka.annotation.KafkaClient;
+import io.micronaut.configuration.kafka.annotation.KafkaKey;
+import io.micronaut.configuration.kafka.annotation.Topic;
+
+[*Remove the Microservice part of a microservice name if it ends with it*]
+@KafkaClient
+public interface [%=strippedName%]Producer {
+
+	[%for (event in microservice.produces){%]
+	@Topic("[%=event.sentTo.streamName%]")
+	void [%=event.name%](@KafkaKey [%=event.eventType.keyType%] [%=event.eventType.key%], [%=event.eventType.valueType%] [%=event.eventType.value%]);
+	
+	[%}%]
+
+}

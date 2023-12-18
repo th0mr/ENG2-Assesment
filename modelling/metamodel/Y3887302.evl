@@ -1,0 +1,71 @@
+
+
+context Application {
+
+	// Constraint 1 - There should be at least one microservice
+	constraint AtLeastOneMicroservice {
+		check : self.microservices.size() > 0
+		message : "The application needs to contain at least one microservice" 
+	}
+
+}
+
+context Event {
+
+	// Constraint 2 - Every event should be used in least one event stream
+	critique usedInAtLeastOneEventStream {
+		check : self.sentTo != null
+		message : "The event " + self.name + " is not used in any stream" 
+	}
+	
+}
+
+context EventStream {
+
+	// Constraint 3 - Every event stream should have at least one publisher and one subscriber
+	critique streamHasAtLeastOnePublisher {
+		check : self.eventsRecieved.size() > 0
+		message : "The event stream " + self.streamName + " does not have any publishers" 
+	}
+	
+	critique streamHasAtLeastOneSubscriber {
+		check : self.consumers.size() > 0
+		message : "The event stream " + self.streamName + " does not have any subscribers" 
+	}
+	
+}
+
+context Microservice {
+
+	// Constraint 4 - Every microservice needs at least one “health” resource using the HTTP GET method and
+	// taking no parameters, for reporting if it is working correctly
+	
+	
+	constraint hasAHttpClient{
+		check : self.clients.size() > 0
+		message : "The microservice " + self.name + " must have a client" 
+	}
+	
+	constraint hasAHealthMethod {
+		check : self.containsHealthMethod()
+		message : "The microservice " + self.name + " must contain a 'health' method in one of it's clients for testing if 
+				   the microservice is working correctly (A HTTP Get method that takes no parameters)" 
+	}
+
+}
+
+// A health method is a HTTP get method that takes no parameters
+operation Microservice containsHealthMethod() : Boolean {
+	
+	// Iterate over all methods looking for a Get method with no parameters
+	for (client : HttpClient in self.clients){
+		for (method : HttpMethod in client.methods){
+			if (method.type ==  MethodType#Get){
+				if (method.parameters.size() == 0){
+					return true;
+				}
+			}	
+		}
+	}
+	return false;
+}

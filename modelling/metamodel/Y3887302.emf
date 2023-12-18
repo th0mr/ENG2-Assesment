@@ -3,13 +3,34 @@ package microserviceArchitecture;
 
 class Application {
 	val Microservice[*] microservices;
+	val EventStream[*] streams;
 }
 
 class Microservice {
 	attr String name;
-	val EventStream[*] consumers;
-	val Event[*] publishes;
-	val HttpClient[*] client;
+	ref EventStream[*] consumesFrom;
+	val Event[*] produces;
+	val HttpClient[*] clients;
+}
+
+class Event {
+	attr String name;
+	ref EventStream sentTo;
+	ref EventType eventType;
+}
+
+class EventType {
+	attr String keyType;
+	attr String valueType;
+	attr String key;
+	attr String value;
+}
+
+class EventStream {
+	attr String streamName;
+	val EventType eventType;
+	ref Event[*] eventsRecieved;
+	ref Microservice[*] consumers;
 }
 
 class HttpClient {
@@ -20,19 +41,13 @@ class HttpClient {
 class HttpMethod {
 	attr String methodName;
 	attr MethodType type;
+	attr String returnType;
+	val Parameter[*] parameters;
 }
 
-class EventStream {
-	attr String streamName;
-	val Event[*] consumes;
-}
-
-class Event {
-	attr String topicName;
-	attr String keyType;
-	attr String valueType;
-	attr String key;
-	attr String value;
+class Parameter {
+	attr String parameterName;
+	attr String parameterType;
 }
 
 enum MethodType {

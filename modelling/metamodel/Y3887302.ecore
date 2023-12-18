@@ -4,15 +4,38 @@
   <eClassifiers xsi:type="ecore:EClass" name="Application">
     <eStructuralFeatures xsi:type="ecore:EReference" name="microservices" upperBound="-1"
         eType="#//Microservice" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="streams" upperBound="-1"
+        eType="#//EventStream" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Microservice">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="consumers" upperBound="-1"
-        eType="#//EventStream" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="publishes" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="consumesFrom" upperBound="-1"
+        eType="#//EventStream" eOpposite="#//EventStream/consumers"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="produces" upperBound="-1"
         eType="#//Event" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="client" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clients" upperBound="-1"
         eType="#//HttpClient" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Event">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sentTo" eType="#//EventStream"
+        eOpposite="#//EventStream/eventsRecieved"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eventType" eType="#//EventType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EventType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EventStream">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="streamName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eventType" eType="#//EventType"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="eventsRecieved" upperBound="-1"
+        eType="#//Event" eOpposite="#//Event/sentTo"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="consumers" upperBound="-1"
+        eType="#//Microservice" eOpposite="#//Microservice/consumesFrom"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="HttpClient">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="urlName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -22,18 +45,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="HttpMethod">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="methodName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//MethodType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="returnType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//Parameter" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EventStream">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="streamName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="consumes" upperBound="-1"
-        eType="#//Event" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Event">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="topicName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valueType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Parameter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="parameterName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="parameterType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="MethodType">
     <eLiterals name="Post"/>
