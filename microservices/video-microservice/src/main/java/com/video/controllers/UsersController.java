@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import com.video.domain.Hashtag;
 import com.video.domain.User;
 import com.video.domain.Video;
 import com.video.dto.UserDTO;

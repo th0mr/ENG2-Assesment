@@ -1,6 +1,7 @@
 package com.video.clients;
 
 
+import com.video.domain.Hashtag;
 import com.video.domain.User;
 import com.video.domain.Video;
 import com.video.dto.VideoDTO;
@@ -23,7 +24,7 @@ public interface VideosClient {
 	HttpResponse<Void> add(@Body VideoDTO videoDetails);
 
 	@Get("/{id}")
-	VideoDTO getVideo(long id);
+	Video getVideo(long id);
 
 	@Put("/{id}")
 	HttpResponse<Void> updateVideo(long id, @Body VideoDTO videoDetails);
@@ -38,6 +39,14 @@ public interface VideosClient {
 
 	@Put("/{videoId}/creator/{userId}")
 	public HttpResponse<String> setCreator(long videoId, long userId);
+	
+	// Hashtags
+	
+	@Put("/{videoId}/hashtags/{hashtagId}")
+	public HttpResponse<String> addHashtag(long videoId, long hashtagId);
+	
+	@Get("/{id}/hashtags")
+	public Iterable<Hashtag> getHashtags(long id);
 	
 	// Viewers
 	

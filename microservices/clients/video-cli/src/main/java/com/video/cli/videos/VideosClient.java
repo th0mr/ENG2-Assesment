@@ -22,7 +22,7 @@ public interface VideosClient {
 	HttpResponse<Void> add(@Body VideoDTO videoDetails);
 
 	@Get("/{id}")
-	VideoDTO getVideo(long id);
+	Video getVideo(long id);
 
 	@Put("/{id}")
 	HttpResponse<Void> updateVideo(long id, @Body VideoDTO videoDetails);

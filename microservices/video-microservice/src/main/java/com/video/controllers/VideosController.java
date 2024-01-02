@@ -2,9 +2,7 @@ package com.video.controllers;
 
 import java.net.URI;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -117,7 +115,9 @@ public class VideosController {
 			v.setTitle(videoDetails.getTitle());
 		}
 		
-		if (Objects.isNull(videoDetails.getCreatorId())) {
+		// long defaults to 0, the first id assigned by mariadb is a 1, so this shouldnt be an issue
+		// but yes, this is lazy, and its too late to go change long -> Long for null checking
+		if (videoDetails.getCreatorId() != 0) {
 			long creatorId = videoDetails.getCreatorId();
 			User user = userRepo.findById(creatorId).orElse(null);
 			if (user == null) {
@@ -191,7 +191,7 @@ public class VideosController {
 
 		Video video = oVideo.get();
 		Hashtag hashtag = oHashtag.get();
-		boolean success = video.getHashtags().add(hashtag);
+		video.getHashtags().add(hashtag);
 		
 		repo.update(video);
 		
@@ -240,6 +240,11 @@ public class VideosController {
 		Optional<Video> oVideo = repo.findById(videoId);
 		if (oVideo.isEmpty()) {
 			return HttpResponse.notFound(String.format("Video %d not found", videoId));
+		}
+		
+		Optional<User> oUser = userRepo.findById(userId);
+		if (oUser.isEmpty()) {
+			return HttpResponse.notFound(String.format("User %d not found", userId));
 		}
 
 		Video video = oVideo.get();
@@ -297,7 +302,7 @@ public class VideosController {
 	
 	@Transactional
 	@Put("/{videoId}/dislikers/{userId}")
-	public HttpResponse<String> addDisiker(long videoId, long userId) {
+	public HttpResponse<String> addDisliker(long videoId, long userId) {
 		Optional<Video> oVideo = repo.findById(videoId);
 		if (oVideo.isEmpty()) {
 			return HttpResponse.notFound(String.format("Video %d not found", videoId));
@@ -327,6 +332,11 @@ public class VideosController {
 			return HttpResponse.notFound(String.format("Video %d not found", videoId));
 		}
 
+		Optional<User> oUser = userRepo.findById(userId);
+		if (oUser.isEmpty()) {
+			return HttpResponse.notFound(String.format("User %d not found", userId));
+		}
+		
 		Video video = oVideo.get();
 		video.getLikers().removeIf(u -> userId == u.getId());
 		repo.update(video);
@@ -340,6 +350,11 @@ public class VideosController {
 		Optional<Video> oVideo = repo.findById(videoId);
 		if (oVideo.isEmpty()) {
 			return HttpResponse.notFound(String.format("Video %d not found", videoId));
+		}
+		
+		Optional<User> oUser = userRepo.findById(userId);
+		if (oUser.isEmpty()) {
+			return HttpResponse.notFound(String.format("User %d not found", userId));
 		}
 
 		Video video = oVideo.get();
