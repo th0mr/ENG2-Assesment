@@ -19,7 +19,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Event">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sentTo" eType="#//EventStream"
-        eOpposite="#//EventStream/eventsRecieved"/>
+        eOpposite="#//EventStream/"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eventType" eType="#//EventType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EventType">
@@ -32,8 +32,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="streamName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="eventType" eType="#//EventType"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="eventsRecieved" upperBound="-1"
-        eType="#//Event" eOpposite="#//Event/sentTo"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="" upperBound="-1" eType="#//Event"
+        eOpposite="#//Event/sentTo"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="consumers" upperBound="-1"
         eType="#//Microservice" eOpposite="#//Microservice/consumesFrom"/>
   </eClassifiers>

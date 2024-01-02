@@ -1,15 +1,38 @@
 pre {
-  var outDirLib : String = "./testing/";
+  var outDirLib : String = "../../microservices/";
+  var microservices = Microservice.allInstances();
 } 
 
+// Gets the lower case, hyphen seperated string value of a microservice name
+operation Microservice getMicroservicesFolderName() : String {
+	return self.name.split('(?=[A-Z])').concat("-").toLowerCase();
+}
+
+// To be used on strings containing microservice names
+operation Microservice getStrippedMicroserviceName() : String{
+	// This logic ensures microservice is chopped off the end of the names if it is there, as it is with my model
+	if (self.name.toLowerCase().endsWith("microservice")){
+		return self.name.substring(0, self.name.length() - 12);
+	} else {
+		return self.name;
+	}
+}
+
 rule client2java transform client : HttpClient{
-	
+
+	pre {
+		// Gets the parent of the client, i.e. the microservice it belongs to
+		var parentMicroservice = client.eContainer();
+		var strippedName = parentMicroservice.getStrippedMicroserviceName();
+	}
+
 	template : "./client2java.egl"
 	
 	parameters : Map{"client"=client}
 	
 	target {
-    	var outFile = outDirLib + client.urlName.substring(0,1).toUpperCase() + client.urlName.substring(1) + "Controller";
+    	var outFile = outDirLib + parentMicroservice.getMicroservicesFolderName() + "/m2t_output/src/main/java/com/" + strippedName.toLowerCase() + 
+    				 "/controllers/" + client.urlName.firstToUpperCase() + "Controller";
     	return outFile + ".java";
   	}
 }
@@ -17,22 +40,27 @@ rule client2java transform client : HttpClient{
 // Transforms events from each microservice into a single producer file
 rule producers2java transform microservice : Microservice{
 	
-	pre {
-		var strippedName;
-		if (microservice.name.endsWith("Microservice")){
-			strippedName = microservice.name.substring(0, microservice.name.length() - 12);
-		} else {
-			strippedName = microservice.name;
-		}
-	}
+	guard : microservice.produces.size() > 0
 	
+	pre {
+		var strippedName = microservice.getStrippedMicroserviceName();
+	}
+
 	template : "./producer2java.egl"
 	
 	parameters : Map{"microservice"=microservice,
 					 "strippedName"=strippedName}
 	
 	target {
-    	var outFile = outDirLib + microservice.name + "/src/main/java/com/" + strippedName + "/events/" + strippedName + "Producer";
+    	var outFile = outDirLib + microservice.getMicroservicesFolderName() + "/m2t_output/src/main/java/com/" + strippedName.toLowerCase() + 
+    				  "/events/" + strippedName + "Producer";
     	return outFile + ".java";
   	}
 }
+
+// TODO - If I have more time, make this M2T transformation
+//// Producers kafka Factory classes for each consumesFrom eventsteam object a microservice has
+//rule listeners2java transform client in : microservice.consumesFrom{
+//
+//
+//}

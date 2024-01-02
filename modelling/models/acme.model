@@ -110,17 +110,41 @@
       <methods xmi:id="_W71LsJ2eEe6VjPwt-gxfIA" methodName="list" type="Get" returnType="List&lt;HashLikesPair>"/>
     </clients>
   </microservices>
-  <microservices xmi:id="_zVjHkJjuEe6fbNeXgPK52A" name="SubscriptionMicroservice"/>
+  <microservices xmi:id="_zVjHkJjuEe6fbNeXgPK52A" name="SubscriptionMicroservice">
+    <produces xmi:id="_Q440wKCyEe6tkqjJ9buNIA" name="unsubscribedFromHashtag" sentTo="_lyzp8KCyEe6tkqjJ9buNIA" eventType="_0wxeEKCyEe6tkqjJ9buNIA"/>
+    <produces xmi:id="_4U5FEKCyEe6tkqjJ9buNIA" name="subscribedToHashtag" sentTo="_cfZk4KCyEe6tkqjJ9buNIA" eventType="_qPDy0KCyEe6tkqjJ9buNIA"/>
+    <clients xmi:id="_LkjuQKALEe6gacIG30QL1A" urlName="subscription">
+      <methods xmi:id="_Os4awKCzEe6tkqjJ9buNIA" methodName="subscribeTo" returnType="HttpResponse&lt;Void>">
+        <parameters xmi:id="_E2MiIKC2Ee6tkqjJ9buNIA" parameterName="userId" parameterType="long"/>
+        <parameters xmi:id="_E2MiIaC2Ee6tkqjJ9buNIA" parameterName="hashtagId" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_kMMcAKCzEe6tkqjJ9buNIA" methodName="unsubscribeFrom" type="Delete" returnType="HttpResponse&lt;Void>">
+        <parameters xmi:id="_EpsXMKC2Ee6tkqjJ9buNIA" parameterName="userId" parameterType="long"/>
+        <parameters xmi:id="_EpsXMaC2Ee6tkqjJ9buNIA" parameterName="hashtagId" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_otyX4KCzEe6tkqjJ9buNIA" methodName="getTopTenVideos" returnType="Iterable&lt;Video>">
+        <parameters xmi:id="_xDSqQKCzEe6tkqjJ9buNIA" parameterName="userId" parameterType="long"/>
+        <parameters xmi:id="_Cg2bYKC2Ee6tkqjJ9buNIA" parameterName="hashtagId" parameterType="long"/>
+      </methods>
+      <methods xmi:id="_OSsbMKcsEe6sLcwTjJdDJg" methodName="list" type="Get" returnType="List&lt;Subscription>"/>
+    </clients>
+  </microservices>
   <streams xmi:id="_RIuuYJjtEe6fbNeXgPK52A" streamName="video-watched" eventsRecieved="_MWAFkJj1Ee6fbNeXgPK52A" consumers="_R4leAJjtEe6fbNeXgPK52A">
-    <eventType xmi:id="_LJHbsJj1Ee6fbNeXgPK52A" keyType="Long" valueType="Video" key="userId" value="v"/>
+    <eventType xmi:id="_LJHbsJj1Ee6fbNeXgPK52A" keyType="long" valueType="Video" key="userId" value="v"/>
   </streams>
   <streams xmi:id="_VARnsJjtEe6fbNeXgPK52A" streamName="video-posted" eventsRecieved="_O4KgUJj1Ee6fbNeXgPK52A">
-    <eventType xmi:id="_K_HyMJj1Ee6fbNeXgPK52A" keyType="Long" valueType="Video" key="userId" value="v"/>
+    <eventType xmi:id="_K_HyMJj1Ee6fbNeXgPK52A" keyType="long" valueType="Video" key="userId" value="v"/>
   </streams>
   <streams xmi:id="_VH9kEJjtEe6fbNeXgPK52A" streamName="video-disliked" eventsRecieved="_S-NvsJj1Ee6fbNeXgPK52A">
-    <eventType xmi:id="_K0pnkJj1Ee6fbNeXgPK52A" keyType="Long" valueType="Video" key="userId" value="v"/>
+    <eventType xmi:id="_K0pnkJj1Ee6fbNeXgPK52A" keyType="long" valueType="Video" key="userId" value="v"/>
   </streams>
   <streams xmi:id="_VXTnoJjtEe6fbNeXgPK52A" streamName="video-liked" eventsRecieved="_QnK_0Jj1Ee6fbNeXgPK52A">
-    <eventType xmi:id="_HtY7sJj1Ee6fbNeXgPK52A" keyType="Long" valueType="Video" key="userId" value="v"/>
+    <eventType xmi:id="_HtY7sJj1Ee6fbNeXgPK52A" keyType="long" valueType="Video" key="userId" value="v"/>
+  </streams>
+  <streams xmi:id="_cfZk4KCyEe6tkqjJ9buNIA" streamName="hashtag-subscribed" eventsRecieved="_4U5FEKCyEe6tkqjJ9buNIA">
+    <eventType xmi:id="_qPDy0KCyEe6tkqjJ9buNIA" keyType="long" valueType="long" key="userId" value="hashtagId"/>
+  </streams>
+  <streams xmi:id="_lyzp8KCyEe6tkqjJ9buNIA" streamName="hashtag-unsubscribed" eventsRecieved="_Q440wKCyEe6tkqjJ9buNIA">
+    <eventType xmi:id="_0wxeEKCyEe6tkqjJ9buNIA" keyType="long" valueType="long" key="userId" value="hashtagId"/>
   </streams>
 </Application>
