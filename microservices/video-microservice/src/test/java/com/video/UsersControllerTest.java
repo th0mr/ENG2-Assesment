@@ -3,7 +3,6 @@ package com.video;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.video.clients.UsersClient;
-import com.video.clients.VideosClient;
 import com.video.domain.User;
 import com.video.domain.Video;
 import com.video.dto.UserDTO;
@@ -30,9 +28,6 @@ public class UsersControllerTest {
 	
 	@Inject
     UsersClient userClient;
-	
-	@Inject
-    VideosClient videoClient;
 
     @Inject
     VideosRepository videosRepository;
@@ -84,11 +79,21 @@ public class UsersControllerTest {
     // testing list
     @Test
     public void testList() {
-    	User u1 = createAndSaveUser("u1");
-    	User u2 = createAndSaveUser("u2");
+    	createAndSaveUser("u1");
+    	createAndSaveUser("u2");
     	
     	List<User> users = iterableToList(userClient.list());
         assertEquals(2, users.size(), "There should be two users in the repository");
+    }
+    
+    // testing addUser
+    @Test
+    public void testAddUser() {
+    	UserDTO dto = new UserDTO();
+    	dto.setUsername("new_user");
+    	HttpResponse<Void> response = userClient.add(dto);
+    	assertEquals(HttpStatus.CREATED, response.getStatus(), "user should be created sucessfully");
+    	assertEquals(1, usersRepository.findAll().spliterator().estimateSize(), "there should be one user created");
     }
     
     // testing getUser
@@ -222,6 +227,13 @@ public class UsersControllerTest {
     	List<Video> videos = iterableToList(userClient.getUserWatchedVideos(u.getId()));
     	assertEquals(1, videos.size(), "user should have one watched video");
     	assertEquals(videoName, videos.get(0).getTitle(), "the watched video should be called " + videoName);
+    }
+    
+    @Test
+    public void testGetWatchedVideosUserNotFound() {
+    	// user id 999 should not exist, so we request their videos
+    	Iterable<Video> videos = userClient.getUserWatchedVideos(999);
+    	assertNull(videos,"null should be returned as the user does not exist");
     }
     
 }

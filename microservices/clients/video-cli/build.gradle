@@ -1,6 +1,7 @@
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.micronaut.application") version "3.7.10"
+    id("jacoco")
 }
 
 version = "0.1"
@@ -17,6 +18,7 @@ dependencies {
     implementation("io.micronaut.picocli:micronaut-picocli")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("jakarta.annotation:jakarta.annotation-api")
+    testImplementation("org.awaitility:awaitility:4.2.0")
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-http-client")
 }
@@ -45,5 +47,15 @@ configurations.all {
         substitute(module("io.micronaut:micronaut-jackson-databind"))
             .using(module("io.micronaut.serde:micronaut-serde-jackson:1.5.3"))
     }
+}
+
+test {
+	// report is always generated after tests run
+	finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+	// tests are required to run before generating the report
+	dependsOn test
 }
 

@@ -1,6 +1,7 @@
 package com.video.cli.videos;
 
 import com.video.cli.domain.User;
+import com.video.cli.domain.Video;
 import com.video.cli.dto.VideoDTO;
 
 import jakarta.inject.Inject;
@@ -19,7 +20,7 @@ public class GetNumberOfLikesCommand implements Runnable {
 	@Override
 	public void run() {
 		// Get video for the sake of pulling the name out
-		VideoDTO video = client.getVideo(id);
+		Video video = client.getVideo(id);
 		if (video == null) {
 			System.err.println("video not found!");
 			System.exit(1);

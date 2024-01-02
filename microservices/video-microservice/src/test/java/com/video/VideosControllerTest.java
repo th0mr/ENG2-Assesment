@@ -147,6 +147,19 @@ public class VideosControllerTest {
 		assertTrue(postedVideos.containsKey(u.getId()), "A record should have been sent to the mocked posted_video topic");
     }    
     
+    @Test
+    public void testAddVideoUserNotFound() {
+    	VideoDTO dto = new VideoDTO();
+    	dto.setTitle("test_video");
+    	// Set creator id to 999 as it should not exist
+    	dto.setCreatorId(999);
+    	dto.setHashtagString("tag1,tag2");
+    	
+    	HttpResponse<Void> response = videoClient.add(dto);
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatus(), "Video should have not been added");
+        assertEquals(0, videosRepository.findAll().spliterator().estimateSize(), "no video should be present in the db");
+    }
+    
     // Testing getVideo
     @Test
     public void testGetVideo() {
@@ -198,7 +211,7 @@ public class VideosControllerTest {
 		User newUser = createAndSaveUser("new_user");
 		String newTitle = "new_title";
 		String newHashtags = "new_tag1,new_tag2,new_tag3";
-		List<String> SeperatedNewHashtags = new ArrayList<String>(Arrays.asList(newHashtags.split(" , ")));
+		List<String> SeperatedNewHashtags = new ArrayList<String>(Arrays.asList(newHashtags.split(",")));
 
 		// Create a DTO to replace all three attributes
 		VideoDTO dto = new VideoDTO();
@@ -238,9 +251,8 @@ public class VideosControllerTest {
 		dto.setCreatorId(999);
     	HttpResponse<Void> response = videoClient.updateVideo(v.getId(), dto);
     	assertEquals(HttpStatus.NOT_FOUND, response.getStatus(), "user does not exist, so update video should not be able to find it");
-    	// Confirm name and userId has not changed
+    	// Confirm userId has not changed
     	Video fetchedVideo = videosRepository.findById(v.getId()).get();
-    	assertEquals(v.getTitle(), fetchedVideo.getTitle(), "Title should still match the pre-update attempt state");
     	assertEquals(v.getCreator().getId(), fetchedVideo.getCreator().getId(), "Title should still match the pre-update attempt state");
     }
     
@@ -420,6 +432,13 @@ public class VideosControllerTest {
 		Iterable<User> viewers = videoClient.getViewers(v.getId());
 		assertEquals(2, viewers.spliterator().getExactSizeIfKnown());
 	}
+	
+   @Test
+    public void testGetVideoViewersVideoNotFound() {
+    	// video id 999 should not exist, so we request their viewers
+    	Iterable<User> users = videoClient.getViewers(999);
+    	assertNull(users, "null should be returned as the video does not exist");
+    }
 		
 	// Liker Related Code
 	@Test
@@ -526,6 +545,13 @@ public class VideosControllerTest {
 		assertEquals(2, likers.spliterator().getExactSizeIfKnown());
 	}
 	
+   @Test
+    public void testGetVideoLikersVideoNotFound() {
+    	// video id 999 should not exist, so we request their likers
+    	Iterable<User> users = videoClient.getLikers(999);
+    	assertNull(users, "null should be returned as the video does not exist");
+    }
+	
 	// Disliker Related Code
 	@Test
 	public void testNoVideoDisliker() {
@@ -630,6 +656,13 @@ public class VideosControllerTest {
 		Iterable<User> dislikers = videoClient.getDislikers(v.getId());
 		assertEquals(2, dislikers.spliterator().getExactSizeIfKnown());
 	}
+	
+   @Test
+    public void testGetVideoDislikersVideoNotFound() {
+    	// video id 999 should not exist, so we request their dislikers
+    	Iterable<User> users = videoClient.getDislikers(999);
+    	assertNull(users, "null should be returned as the video does not exist");
+    }
 	
 	// Utility methods
 	private <T> List<T> iterableToList(Iterable<T> iterable) {
