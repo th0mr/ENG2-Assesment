@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: trnedingHashtagMicroservice
+    name: trendingHashtagMicroservice
   server:
     port: 8081
 datasources:

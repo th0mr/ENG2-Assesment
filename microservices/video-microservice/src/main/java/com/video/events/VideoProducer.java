@@ -7,7 +7,7 @@ import io.micronaut.configuration.kafka.annotation.KafkaKey;
 import io.micronaut.configuration.kafka.annotation.Topic;
 
 @KafkaClient
-public interface VideosProducer {
+public interface VideoProducer {
 
 	String TOPIC_WATCHED = "video-watched";
 	String TOPIC_LIKED = "video-liked";

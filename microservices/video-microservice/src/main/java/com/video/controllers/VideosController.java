@@ -2,6 +2,7 @@ package com.video.controllers;
 
 import java.net.URI;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -39,10 +40,10 @@ public class VideosController {
     HashtagRepository hashtagRepo;
 	
 	@Inject
-	VideosProducer videosProducer;
+	VideoProducer videosProducer;
 	
 	@Inject
-	HashtagController hashtagController;
+	HashtagsController hashtagController;
 	
 	@Get("/")
 	public Iterable<Video> list() {
@@ -66,7 +67,7 @@ public class VideosController {
 		User user = userRepo.findById(creatorId).orElse(null);
 		if (user == null) {
 			System.err.println("Video not created as the user with id=" + creatorId + "was not found!");
-			System.exit(1);
+			return HttpResponse.notFound();
 		}
 		video.setCreator(user);
 
@@ -116,13 +117,16 @@ public class VideosController {
 			v.setTitle(videoDetails.getTitle());
 		}
 		
-		long creatorId = videoDetails.getCreatorId();
-		User user = userRepo.findById(creatorId).orElse(null);
-		if (user == null) {
-			System.err.println("Video not created as the user with id=" + creatorId + "was not found!");
-			System.exit(1);
+		if (Objects.isNull(videoDetails.getCreatorId())) {
+			long creatorId = videoDetails.getCreatorId();
+			User user = userRepo.findById(creatorId).orElse(null);
+			if (user == null) {
+				System.err.println("Video not updated as the user with id=" + creatorId + " was not found!");
+				return HttpResponse.notFound();
+			}
+			v.setCreator(user);
 		}
-		v.setCreator(user);
+		
 		
 		if (videoDetails.getHashtagString() != null) {
 			String hashtagString = videoDetails.getHashtagString();
