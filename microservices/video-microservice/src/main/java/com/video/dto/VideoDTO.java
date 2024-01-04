@@ -1,10 +1,5 @@
 package com.video.dto;
 
-import java.util.Set;
-
-import com.video.domain.Hashtag;
-import com.video.domain.User;
-
 import io.micronaut.serde.annotation.Serdeable;
 
 @Serdeable

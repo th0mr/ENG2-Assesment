@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import com.subscription.domain.Subscription;
 import com.subscription.domain.Video;
 import com.subscription.repositories.SubscriptionRepository;
-import com.trendinghashtag.repositories.HashtagLikedDislikedEventRepository;
 
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;

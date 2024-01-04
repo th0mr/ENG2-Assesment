@@ -14,10 +14,10 @@ import com.video.clients.VideosClient;
 import com.video.domain.User;
 import com.video.domain.Video;
 import com.video.dto.VideoDTO;
+import com.video.events.VideoProducer;
 import com.video.repositories.HashtagRepository;
 import com.video.repositories.UsersRepository;
 import com.video.repositories.VideosRepository;
-import com.video.events.VideoProducer;
 
 import io.micronaut.configuration.kafka.annotation.KafkaKey;
 import io.micronaut.configuration.kafka.annotation.KafkaListener;

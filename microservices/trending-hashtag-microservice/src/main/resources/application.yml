@@ -15,7 +15,7 @@ jpa:
   default:
     entity-scan:
        packages:
-          - com.thm.domain
+          - com.trendinghashtag.domain
     properties:
       hibernate:
         hbm2ddl:

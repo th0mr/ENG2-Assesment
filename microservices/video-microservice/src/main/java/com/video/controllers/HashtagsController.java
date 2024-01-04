@@ -1,23 +1,22 @@
 package com.video.controllers;
 
-import io.micronaut.http.HttpResponse;
-import io.micronaut.http.annotation.*;
-
-import jakarta.inject.Inject;
-
-import com.video.domain.Hashtag;
-import com.video.domain.User;
-import com.video.domain.Video;
-import com.video.dto.HashtagDTO;
-import com.video.dto.VideoDTO;
-import com.video.repositories.HashtagRepository;
-
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
+
+import com.video.domain.Hashtag;
+import com.video.domain.Video;
+import com.video.dto.HashtagDTO;
+import com.video.repositories.HashtagRepository;
+
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Delete;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
+import jakarta.inject.Inject;
 
 @Controller("/hashtags")
 public class HashtagsController {

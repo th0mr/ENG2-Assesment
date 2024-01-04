@@ -1,6 +1,7 @@
 package com.video.cli.videos;
 
 import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
@@ -44,7 +45,6 @@ public class AddVideoCommand implements Runnable {
 		
 		System.out.println("Server responded with: " + response.getStatus());
 	}
-
 }
 
 

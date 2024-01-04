@@ -1,11 +1,9 @@
 package com.thm.cli.trendingHashtags;
 
+import com.thm.cli.domain.HashLikesPair;
+
 import jakarta.inject.Inject;
 import picocli.CommandLine.Command;
-
-import java.util.List;
-
-import com.thm.cli.domain.HashLikesPair;
 
 @Command(name="get-trending-hashtags", description="Get the top ten trending hashtags from the last hour based on their likes / dislikes,"
 		+ " negative values indicate videos with more dislikes than likes. These are still considered 'trending'", mixinStandardHelpOptions = true)

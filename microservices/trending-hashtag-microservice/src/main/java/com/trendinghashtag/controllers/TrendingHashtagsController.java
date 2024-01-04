@@ -1,17 +1,14 @@
 package com.trendinghashtag.controllers;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.trendinghashtag.domain.HashLikesPair;
-import com.trendinghashtag.domain.Hashtag;
 import com.trendinghashtag.domain.HashtagLikedDislikedEvent;
 import com.trendinghashtag.repositories.HashtagLikedDislikedEventRepository;
 

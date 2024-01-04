@@ -6,7 +6,7 @@ plugins {
 }
 
 version = "0.1"
-group = "com.thm"
+group = "com.trendinghashtag"
 
 repositories {
     mavenCentral()
@@ -17,7 +17,6 @@ dependencies {
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.kafka:micronaut-kafka")
-    implementation("io.micronaut.kafka:micronaut-kafka-streams")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("jakarta.annotation:jakarta.annotation-api")
@@ -28,7 +27,7 @@ dependencies {
 
 
 application {
-    mainClass.set("com.thm.Application")
+    mainClass.set("com.trendinghashtag.Application")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("11")

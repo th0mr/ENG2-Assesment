@@ -1,9 +1,9 @@
 package com.subscription;
 
-import io.micronaut.configuration.kafka.streams.ConfiguredStreamBuilder;
-import io.micronaut.context.annotation.Factory;
 import org.apache.kafka.streams.kstream.KStream;
 
+import io.micronaut.configuration.kafka.streams.ConfiguredStreamBuilder;
+import io.micronaut.context.annotation.Factory;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 

@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.validation.constraints.NotNull;
 
 import com.video.domain.User;
-import com.video.domain.Video;
 import com.video.dto.UserDTO;
 
 import io.micronaut.data.annotation.Repository;
