@@ -15,7 +15,7 @@ jpa:
   default:
     entity-scan:
        packages:
-          - com.thm.domain
+          - com.subscription.domain
     properties:
       hibernate:
         hbm2ddl:

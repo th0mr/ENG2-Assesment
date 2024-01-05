@@ -1,31 +1,14 @@
-package com.subscription.domain;
+package com.sm.cli.domain;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.micronaut.serde.annotation.Serdeable;
 
-@Entity
 @Serdeable
 public class Subscription {
 
 	// This is the id of the subscription
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     // The user that is subscribing
@@ -35,19 +18,13 @@ public class Subscription {
     private Long hashtagId;
     
     // These are the videos that we build the top ten from
-    @JsonIgnore
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Long> videosNotSeen = new HashSet<Long>();
+    private Set<Video> videosNotSeen = new HashSet<Video>();
 
-    @JsonIgnore
-    @ElementCollection(fetch = FetchType.EAGER)
 	// The videos that have been watched since that user subscribed
-    private Set<Long> videosSeenSinceSub = new HashSet<Long>();
+    private Set<Video> videosSeenSinceSub = new HashSet<Video>();
     
-    @JsonIgnore
-    @ElementCollection(fetch = FetchType.EAGER)
     // The videos that have been posted since the user has subscribed to that tag
-    private Set<Long> videosPostedSinceSub = new HashSet<Long>();
+    private Set<Video> videosPostedSinceSub = new HashSet<Video>();
     
     public Long getId() {
 		return id;
@@ -73,27 +50,27 @@ public class Subscription {
 		this.hashtagId = hashtagId;
 	}
 
-    public Set<Long> getVideosNotSeen() {
+    public Set<Video> getVideosNotSeen() {
 		return videosNotSeen;
 	}
 
-	public void setVideosNotSeen(Set<Long> videosNotSeen) {
+	public void setVideosNotSeen(Set<Video> videosNotSeen) {
 		this.videosNotSeen = videosNotSeen;
 	}
 
-	public Set<Long> getVideosSeenSinceSub() {
+	public Set<Video> getVideosSeenSinceSub() {
 		return videosSeenSinceSub;
 	}
 
-	public void setVideosSeenSinceSub(Set<Long> videosSeenSinceSub) {
+	public void setVideosSeenSinceSub(Set<Video> videosSeenSinceSub) {
 		this.videosSeenSinceSub = videosSeenSinceSub;
 	}
 
-	public Set<Long> getVideosPostedSinceSub() {
+	public Set<Video> getVideosPostedSinceSub() {
 		return videosPostedSinceSub;
 	}
 
-	public void setVideosPostedSinceSub(Set<Long> videosPostedSinceSub) {
+	public void setVideosPostedSinceSub(Set<Video> videosPostedSinceSub) {
 		this.videosPostedSinceSub = videosPostedSinceSub;
 	}
 	

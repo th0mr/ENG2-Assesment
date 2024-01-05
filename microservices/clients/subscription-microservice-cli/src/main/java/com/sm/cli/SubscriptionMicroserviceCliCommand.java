@@ -1,5 +1,8 @@
 package com.sm.cli;
 
+import com.sm.cli.subscriptions.AddSubscriptionCommand;
+import com.sm.cli.subscriptions.RemoveSubscriptionCommand;
+
 import io.micronaut.configuration.picocli.PicocliRunner;
 import io.micronaut.context.ApplicationContext;
 
@@ -9,7 +12,10 @@ import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 @Command(name = "subscription-microservice-cli", description = "...",
-        mixinStandardHelpOptions = true)
+        mixinStandardHelpOptions = true, subcommands= {
+        		AddSubscriptionCommand.class,
+        		RemoveSubscriptionCommand.class
+        })
 public class SubscriptionMicroserviceCliCommand implements Runnable {
 
     @Option(names = {"-v", "--verbose"}, description = "...")

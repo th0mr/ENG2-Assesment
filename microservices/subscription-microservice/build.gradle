@@ -6,7 +6,7 @@ plugins {
 }
 
 version = "0.1"
-group = "com.sm"
+group = "com.subscription"
 
 repositories {
     mavenCentral()
@@ -19,7 +19,6 @@ dependencies {
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.kafka:micronaut-kafka")
-    implementation("io.micronaut.kafka:micronaut-kafka-streams")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
     implementation("jakarta.annotation:jakarta.annotation-api")
@@ -29,7 +28,7 @@ dependencies {
 
 
 application {
-    mainClass.set("com.sm.Application")
+    mainClass.set("com.subscription.Application")
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("11")
