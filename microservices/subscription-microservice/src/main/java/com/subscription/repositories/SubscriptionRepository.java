@@ -1,5 +1,6 @@
 package com.subscription.repositories;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
@@ -20,5 +21,8 @@ public interface SubscriptionRepository extends CrudRepository<Subscription, Lon
 	
 	@Query("SELECT s FROM Subscription s WHERE s.userId = :userId AND s.hashtagId = :hashtagId")
     Optional<Subscription> findByUserIdAndHashtagId(Long userId, Long hashtagId);
+	
+	@Query("SELECT s FROM Subscription s WHERE s.hashtagId = :hashtagId")
+    List<Subscription> findAllByHashtagId(Long hashtagId);
 
 }

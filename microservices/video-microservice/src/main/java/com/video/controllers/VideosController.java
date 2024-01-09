@@ -71,10 +71,6 @@ public class VideosController {
 
 		URI uri = URI.create("/videos/" + video.getId());
         Video savedVideo = repo.save(video);
-		
-		if (savedVideo != null) {
-			videosProducer.postedVideo(user.getId(), savedVideo);
-		}
         
 		String hashtagString = videoDetails.getHashtagString();
 		// Set hashtags
@@ -92,6 +88,12 @@ public class VideosController {
 	        	Hashtag hash = hashtagRepo.findByName(hashtagName).orElse(null);
 	        	addHashtag(savedVideo.getId(), hash.getId());
 	        }
+		}
+		
+		// Now get the video we just updated from the repo, now with hashtags, and 
+        if (savedVideo != null) {
+        	savedVideo = repo.findById(savedVideo.getId()).get();
+			videosProducer.postedVideo(user.getId(), savedVideo);
 		}
         
 		return HttpResponse.created(uri);

@@ -20,6 +20,7 @@ import com.subscription.domain.Subscription;
 import com.subscription.domain.User;
 import com.subscription.domain.Video;
 import com.subscription.domain.VideoViewsPair;
+import com.subscription.events.SubscriptionProducer;
 import com.subscription.repositories.SubscriptionRepository;
 
 import io.micronaut.http.HttpResponse;
@@ -49,14 +50,10 @@ public class SubscriptionController {
 	@Inject
 	private HashtagsClient hashtagClient;
 	
-	// protected region classVariables end
+	@Inject
+	private SubscriptionProducer subProducer;
 	
-	// Utility method
-	private <T> Set<T> iterableToSet(Iterable<T> iterable) {
-		Set<T> l = new HashSet<>();
-		iterable.forEach(l::add);
-		return l;
-	}
+	// protected region classVariables end
 	
 	@Get("/")
 	public Iterable<Subscription> list() {
@@ -99,6 +96,11 @@ public class SubscriptionController {
 		
 		URI uri = URI.create("/subscription/" + userId + "/" + hashtagId);
 		Subscription createdSub = repo.save(sub);
+		
+		if (createdSub != null) {
+			subProducer.subscribedToHashtag(userId, hashtagId);
+		}
+		
 		return HttpResponse.created(uri);
 		// protected region methodContents end
 	}
@@ -113,6 +115,9 @@ public class SubscriptionController {
 		}
 
 		repo.delete(sub.get());
+		
+		subProducer.unsubscribedFromHashtag(userId, hashtagId);
+
 		return HttpResponse.ok();
 		// protected region methodContents end
 	}

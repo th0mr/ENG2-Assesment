@@ -57,7 +57,7 @@ public class VideosControllerTest {
 	// Mock the whole producer class, replacing the methods with ones that capture the records into
 	// the above Maps so we can read them in tests.
 	@MockBean(VideoProducer.class)
-	VideoProducer watchedVideo() {
+	VideoProducer mockVideoProducer() {
 		return new VideoProducer() {
 			
 			@Override
