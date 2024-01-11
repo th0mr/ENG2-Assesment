@@ -7,7 +7,7 @@ import com.subscription.domain.Video;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.client.annotation.Client;
 
-@Client("${users.url:`http://localhost:8080/users`}")
+@Client("${USERS_URL:`http://localhost:8080/users`}")
 public interface UsersClient {
 
 	@Get("/{id}")

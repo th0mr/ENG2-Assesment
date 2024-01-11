@@ -2,6 +2,7 @@ services:
   # Our database management system
   db:
     image: mariadb:11
+    restart: unless-stopped
     environment:
       MARIADB_USER: &dbuser todo
       MARIADB_PASSWORD: &dbpass todosecret
@@ -9,25 +10,47 @@ services:
       MARIADB_DATABASE: &dbname videos
     volumes:
       - mariadb_data:/var/lib/mysql
+  # Microservice images
+  video-microservice:
+    image: video-microservice:latest
+    restart: unless-stopped
     ports:
-      - 3306:3306
-
-  kafka-ui:
-    image: provectuslabs/kafka-ui:latest
-    ports:
-      - 9000:8080
-    depends_on:
-      - kafka-0
-      - kafka-1
-      - kafka-2
+      - 8080:8080
     environment:
-      KAFKA_CLUSTERS_0_NAME: local
-      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-0:9092
-      KAFKA_CLUSTERS_0_METRICS_PORT: 9997
-      DYNAMIC_CONFIG_ENABLED: 'true'
-
+      DB_HOST: db
+      DB_USER: *dbuser
+      DB_PASSWORD: *dbpass
+      DB_NAME: *dbname
+      KAFKA_BOOTSTRAP_SERVERS: kafka-0:9092, kafka-1:9092, kafka-2:9092
+  trending-hashtag-microservice:
+    image: trending-hashtag-microservice:latest
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      DB_HOST: db
+      DB_USER: *dbuser
+      DB_PASSWORD: *dbpass
+      DB_NAME: *dbname
+      KAFKA_BOOTSTRAP_SERVERS: kafka-0:9092, kafka-1:9092, kafka-2:9092
+  subscription-microservice:
+    image: subscription-microservice:latest
+    restart: unless-stopped
+    ports:
+      - 8082:8082
+    environment:
+      VIDEOS_URL: http://video-microservice:8080/videos
+      USERS_URL: http://video-microservice:8080/users
+      HASHTAGS_URL: http://video-microservice:8080/hashtags
+      DB_HOST: db
+      DB_USER: *dbuser
+      DB_PASSWORD: *dbpass
+      DB_NAME: *dbname
+      KAFKA_BOOTSTRAP_SERVERS: kafka-0:9092, kafka-1:9092, kafka-2:9092
+  # Kafka cluster
   kafka-0:
     image: docker.io/bitnami/kafka:3.5
+    restart: unless-stopped
     ports:
       - 9094:9094
     environment:
@@ -37,14 +60,15 @@ services:
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
       - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
       # Listeners
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092,EXTERNAL://localhost:9094
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
       # Default topic settings
       - KAFKA_CFG_NUM_PARTITIONS=6
       - KAFKA_CFG_DEFAULT_REPLICATION_FACTOR=3
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
       # JMX port for metrics
       - JMX_PORT=9997
       - KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka-0 -Dcom.sun.management.jmxremote.rmi.port=9997
@@ -52,6 +76,7 @@ services:
       - kafka_0_data:/bitnami/kafka
   kafka-1:
     image: docker.io/bitnami/kafka:3.5
+    restart: unless-stopped
     ports:
       - 9095:9094
     environment:
@@ -61,14 +86,15 @@ services:
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
       - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
       # Listeners
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092,EXTERNAL://localhost:9095
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
       # Default topic settings
       - KAFKA_CFG_NUM_PARTITIONS=6
       - KAFKA_CFG_DEFAULT_REPLICATION_FACTOR=3
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
       # JMX port for metrics
       - JMX_PORT=9997
       - KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka-1 -Dcom.sun.management.jmxremote.rmi.port=9997
@@ -77,6 +103,7 @@ services:
 
   kafka-2:
     image: docker.io/bitnami/kafka:3.5
+    restart: unless-stopped
     ports:
       - 9096:9094
     environment:
@@ -86,14 +113,15 @@ services:
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka-0:9093,1@kafka-1:9093,2@kafka-2:9093
       - KAFKA_KRAFT_CLUSTER_ID=abcdefghijklmnopqrstuv
       # Listeners
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092,EXTERNAL://localhost:9096
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
       # Default topic settings
       - KAFKA_CFG_NUM_PARTITIONS=6
       - KAFKA_CFG_DEFAULT_REPLICATION_FACTOR=3
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
       # JMX port for metrics
       - JMX_PORT=9997
       - KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka-2 -Dcom.sun.management.jmxremote.rmi.port=9997
