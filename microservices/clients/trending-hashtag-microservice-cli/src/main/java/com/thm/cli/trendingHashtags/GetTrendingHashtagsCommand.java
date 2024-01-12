@@ -18,10 +18,7 @@ public class GetTrendingHashtagsCommand implements Runnable {
 		Iterable<HashLikesPair> HashLikePairs = client.list();
 		
 		// Get number of hashlikepairs
-		int count = 0;
-		for (HashLikesPair hlp : HashLikePairs) {
-			count+=1;
-		}
+		int count = 1;
 		
 		System.out.println("The following are the top 10 hashtags in the last hour, less than 10 may be present if less hashtags are trending\n"
 				+ "The last number also takes into account the dislikes of a video i.e.  = likes - dislikes\n");
@@ -29,7 +26,7 @@ public class GetTrendingHashtagsCommand implements Runnable {
 		// Count down the top hashtags
 		for (HashLikesPair hlp : HashLikePairs) {
 			System.out.println("#" + count + " |   '" + hlp.getHashname() + "'  = " + hlp.getLikeCount() + " likes");
-			count-=1;
+			count+=1;
 		}
 	}
 }
