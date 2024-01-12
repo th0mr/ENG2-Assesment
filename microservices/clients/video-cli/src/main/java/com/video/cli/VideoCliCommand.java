@@ -34,12 +34,14 @@ import io.micronaut.context.ApplicationContext;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 @Command(name = "video-cli", description = "...",
         mixinStandardHelpOptions = true,
 		subcommands = {
+				HelpCommand.class,
 				AddUserCommand.class, AddVideoCommand.class, 
 				DeleteUserCommand.class, DeleteVideoCommand.class,
 				UpdateUserCommand.class, UpdateVideoCommand.class,

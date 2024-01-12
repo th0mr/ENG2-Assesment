@@ -110,7 +110,7 @@
       <methods xmi:id="_W71LsJ2eEe6VjPwt-gxfIA" methodName="list" type="Get" returnType="List&lt;HashLikesPair>"/>
     </clients>
   </microservices>
-  <microservices xmi:id="_zVjHkJjuEe6fbNeXgPK52A" name="SubscriptionMicroservice">
+  <microservices xmi:id="_zVjHkJjuEe6fbNeXgPK52A" name="SubscriptionMicroservice" consumesFrom="_VARnsJjtEe6fbNeXgPK52A _RIuuYJjtEe6fbNeXgPK52A">
     <produces xmi:id="_Q440wKCyEe6tkqjJ9buNIA" name="unsubscribedFromHashtag" sentTo="_lyzp8KCyEe6tkqjJ9buNIA" eventType="_0wxeEKCyEe6tkqjJ9buNIA"/>
     <produces xmi:id="_4U5FEKCyEe6tkqjJ9buNIA" name="subscribedToHashtag" sentTo="_cfZk4KCyEe6tkqjJ9buNIA" eventType="_qPDy0KCyEe6tkqjJ9buNIA"/>
     <clients xmi:id="_LkjuQKALEe6gacIG30QL1A" urlName="subscription">

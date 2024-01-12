@@ -7,12 +7,14 @@ import io.micronaut.context.ApplicationContext;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.HelpCommand;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
 @Command(name = "trending-hashtag-microservice-cli", description = "...",
         mixinStandardHelpOptions = true,
         subcommands = {
+				HelpCommand.class,
         		GetTrendingHashtagsCommand.class
         })
 public class TrendingHashtagMicroserviceCliCommand implements Runnable {
