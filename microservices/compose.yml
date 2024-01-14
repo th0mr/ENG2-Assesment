@@ -10,6 +10,8 @@ services:
       MARIADB_DATABASE: &videodbname videos
     volumes:
       - mariadb_videos_data:/var/lib/mysql
+    ports:
+      - 3306:3306
   thm-db:
     image: mariadb:11
     restart: unless-stopped
@@ -20,6 +22,8 @@ services:
       MARIADB_DATABASE: &thmdbname trending-hashtags
     volumes:
       - mariadb_thm_data:/var/lib/mysql
+    ports:
+      - 3307:3307
   subscription-db:
     image: mariadb:11
     restart: unless-stopped
@@ -30,6 +34,8 @@ services:
       MARIADB_DATABASE: &subscriptiondbname subscription
     volumes:
       - mariadb_subscriptions_data:/var/lib/mysql
+    ports:
+      - 3308:3308
   # Microservice images
   video-microservice:
     image: video-microservice:latest

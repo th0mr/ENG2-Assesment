@@ -43,5 +43,10 @@ run 'docker compose down'
 Restarting the services
 =======================
 
-run 'docker compose down'
-then run 'docker compose up -d'
+run 'docker compose down' then run 'docker compose up -d'
+
+
+Running the tests
+=================
+
+The tests for each microservice can be ran using ‘./gradlew test’, however, the docker containers for the kafka cluster, video-db, thm-db and subscription-db must be running (run 'docker compose up -d kafka-0 kafka1 kafka2 video-db thm-db subscription-db)
