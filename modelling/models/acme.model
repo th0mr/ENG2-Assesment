@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns="microserviceArchitecture" xmi:id="_JCEikJjoEe6fbNeXgPK52A">
-  <microservices xmi:id="_R4leAJjtEe6fbNeXgPK52A" name="VideoMicroservice" consumesFrom="_RIuuYJjtEe6fbNeXgPK52A">
+  <microservices xmi:id="_R4leAJjtEe6fbNeXgPK52A" name="VideoMicroservice">
     <produces xmi:id="_MWAFkJj1Ee6fbNeXgPK52A" name="watchedVideo" sentTo="_RIuuYJjtEe6fbNeXgPK52A" eventType="_LJHbsJj1Ee6fbNeXgPK52A"/>
     <produces xmi:id="_O4KgUJj1Ee6fbNeXgPK52A" name="postedVideo" sentTo="_VARnsJjtEe6fbNeXgPK52A" eventType="_K0pnkJj1Ee6fbNeXgPK52A"/>
     <produces xmi:id="_QnK_0Jj1Ee6fbNeXgPK52A" name="likedVideo" sentTo="_VXTnoJjtEe6fbNeXgPK52A" eventType="_K_HyMJj1Ee6fbNeXgPK52A"/>

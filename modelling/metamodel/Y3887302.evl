@@ -1,5 +1,3 @@
-
-
 context Application {
 
 	// Constraint 1 - There should be at least one microservice
@@ -37,7 +35,7 @@ context EventStream {
 
 context Microservice {
 
-	// Constraint 4 - Every microservice needs at least one “health” resource using the HTTP GET method and
+	// Constraint 4 - Every microservice needs at least one health resource using the HTTP GET method and
 	// taking no parameters, for reporting if it is working correctly
 	
 	
