@@ -8,7 +8,7 @@ datasources:
     driver-class-name: org.mariadb.jdbc.Driver
     db-type: mariadb
     dialect: MYSQL
-    url: jdbc:mariadb://${DB_HOST:`localhost:3306`}/${DB_NAME:videos}
+    url: jdbc:mariadb://${DB_HOST:`localhost:3308`}/${DB_NAME:subscription}
     username: ${DB_USER:todo}
     password: ${DB_PASSWORD:todosecret}
 jpa:

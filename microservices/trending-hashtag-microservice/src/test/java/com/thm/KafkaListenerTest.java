@@ -21,10 +21,6 @@ import com.trendinghashtag.events.VideoDislikedListener;
 import com.trendinghashtag.events.VideoLikedListener;
 import com.trendinghashtag.repositories.HashtagLikedDislikedEventRepository;
 
-import io.micronaut.configuration.kafka.annotation.KafkaClient;
-import io.micronaut.configuration.kafka.annotation.KafkaKey;
-import io.micronaut.configuration.kafka.annotation.Topic;
-import io.micronaut.context.annotation.Property;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
 

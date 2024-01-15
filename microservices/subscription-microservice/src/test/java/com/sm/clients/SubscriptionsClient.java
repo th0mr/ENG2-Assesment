@@ -22,6 +22,6 @@ public interface SubscriptionsClient {
 	@Delete("{userId}/{hashtagId}")
 	public HttpResponse<Void> unsubscribeFrom(long userId, long hashtagId);
 	
-	@Post("{userId}/{hashtagId}/recommendations")
+	@Get("{userId}/{hashtagId}/recommendations")
 	public List<VideoViewsPair> getTopTenVideos(long userId, long hashtagId);
 }

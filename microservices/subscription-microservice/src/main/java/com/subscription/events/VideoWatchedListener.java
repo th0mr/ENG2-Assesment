@@ -25,13 +25,13 @@ public class VideoWatchedListener {
 		System.out.printf("Video watched by userId: %d%n", id);
 		
 		for(Hashtag hashtag : video.getHashtags()) {
-			System.out.println("watched event for hashtag " + hashtag.getName() );
+			System.out.println("watched event for hashtag " + hashtag.getName());
 			
 			List<Subscription> subsToHashtag = repo.findAllByHashtagId(hashtag.getId());
 			
 			for (Subscription sub : subsToHashtag) {
 				// Only add as seen video if it was the user from the event
-				if (sub.getUserId() == id) {
+				if (sub.getUserId().equals(id)) {
 					System.out.println("Adding video ID=" + video.getId() + " for subscription.VideosSeenSinceSub, subId=" + sub.getId());
 					sub.getVideosSeenSinceSub().add(video.getId());
 					repo.update(sub);

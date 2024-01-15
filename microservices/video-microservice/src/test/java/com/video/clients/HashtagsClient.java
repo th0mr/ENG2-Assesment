@@ -11,7 +11,7 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.client.annotation.Client;
 
-@Client("/hashtags")
+@Client("${hashtag.url:`http://localhost:8080/hashtags`}")
 public interface HashtagsClient {
 
 	@Get("/")
