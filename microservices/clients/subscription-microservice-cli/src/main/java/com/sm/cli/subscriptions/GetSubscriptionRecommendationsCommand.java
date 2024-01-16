@@ -24,16 +24,21 @@ public class GetSubscriptionRecommendationsCommand implements Runnable{
 	@Override
 	public void run() {
 		List<VideoViewsPair> vidViewPairs = client.getTopTenVideos(userId, hashtagId);
-		
-		System.out.println("The following are the top 10 viewed videos that you have not seen since subscribing to this hashtag\n"
-				+ "Less than 10 may be present if enough videos do not exist to satisfy this criteria\n");
-		
-		int count = 1;
-		
-		// Count down the top hashtags
-		for (VideoViewsPair vvp : vidViewPairs) {
-			System.out.println("#" + count + " |   'vidID=" + vvp.getVideo().getId() + " - " + vvp.getVideo().getTitle() + "' created by user '" + vvp.getVideo().getCreator().getUsername()  + "' - views =" + vvp.getViews());
-			count+=1;
+				
+		if (vidViewPairs != null) {
+			System.out.println("The following are the top 10 viewed videos that you have not seen since subscribing to this hashtag\n"
+					+ "Less than 10 may be present if enough videos do not exist to satisfy this criteria\n");
+			
+			int count = 1;
+			
+			// Count down the top hashtags
+			for (VideoViewsPair vvp : vidViewPairs) {
+				System.out.println("#" + count + " |   'vidID=" + vvp.getVideo().getId() + " - " + vvp.getVideo().getTitle() + "' created by user '" + vvp.getVideo().getCreator().getUsername()  + "' - views =" + vvp.getViews());
+				count+=1;
+			}
+		}
+		else {
+			System.out.println("Subscription does not exist!");
 		}
 	}
 }
