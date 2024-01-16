@@ -129,16 +129,16 @@
       <methods xmi:id="_OSsbMKcsEe6sLcwTjJdDJg" methodName="list" type="Get" returnType="List&lt;Subscription>"/>
     </clients>
   </microservices>
-  <streams xmi:id="_RIuuYJjtEe6fbNeXgPK52A" streamName="video-watched" eventsRecieved="_MWAFkJj1Ee6fbNeXgPK52A" consumers="_R4leAJjtEe6fbNeXgPK52A">
+  <streams xmi:id="_RIuuYJjtEe6fbNeXgPK52A" streamName="video-watched" eventsRecieved="_MWAFkJj1Ee6fbNeXgPK52A" consumers="_zVjHkJjuEe6fbNeXgPK52A">
     <eventType xmi:id="_LJHbsJj1Ee6fbNeXgPK52A" keyType="long" valueType="Video" key="userId" value="v"/>
   </streams>
-  <streams xmi:id="_VARnsJjtEe6fbNeXgPK52A" streamName="video-posted" eventsRecieved="_O4KgUJj1Ee6fbNeXgPK52A">
+  <streams xmi:id="_VARnsJjtEe6fbNeXgPK52A" streamName="video-posted" eventsRecieved="_O4KgUJj1Ee6fbNeXgPK52A" consumers="_zVjHkJjuEe6fbNeXgPK52A">
     <eventType xmi:id="_K_HyMJj1Ee6fbNeXgPK52A" keyType="long" valueType="Video" key="userId" value="v"/>
   </streams>
-  <streams xmi:id="_VH9kEJjtEe6fbNeXgPK52A" streamName="video-disliked" eventsRecieved="_S-NvsJj1Ee6fbNeXgPK52A">
+  <streams xmi:id="_VH9kEJjtEe6fbNeXgPK52A" streamName="video-disliked" eventsRecieved="_S-NvsJj1Ee6fbNeXgPK52A" consumers="_SLfL4JjtEe6fbNeXgPK52A">
     <eventType xmi:id="_K0pnkJj1Ee6fbNeXgPK52A" keyType="long" valueType="Video" key="userId" value="v"/>
   </streams>
-  <streams xmi:id="_VXTnoJjtEe6fbNeXgPK52A" streamName="video-liked" eventsRecieved="_QnK_0Jj1Ee6fbNeXgPK52A">
+  <streams xmi:id="_VXTnoJjtEe6fbNeXgPK52A" streamName="video-liked" eventsRecieved="_QnK_0Jj1Ee6fbNeXgPK52A" consumers="_SLfL4JjtEe6fbNeXgPK52A">
     <eventType xmi:id="_HtY7sJj1Ee6fbNeXgPK52A" keyType="long" valueType="Video" key="userId" value="v"/>
   </streams>
   <streams xmi:id="_cfZk4KCyEe6tkqjJ9buNIA" streamName="hashtag-subscribed" eventsRecieved="_4U5FEKCyEe6tkqjJ9buNIA">
