@@ -1,5 +1,17 @@
 # ENG2-Assessment
 
+An implementation of a Docker Compose mock video service done through three Micronaut microservices using Kafka events and topics to communicate between them.
+
+There are three microservices
+
+1 - video-microservice - Handles CRUD opertations for users, videos and hashtags. Provides resources for users to like, dislike and watch videos.
+
+2 - trending-hashtag-microservice - Provides resources for obtaining the top ten trending hashtags of the last hour based on their (likes - dislikes) count.
+
+3 - subscription-microservice - Provides resources for users to subscribe to / unsubscribe from hashtags as well as obtaining the top ten recommended video for a given subscription based off what the user has already seen and the video's videos.
+
+All microservices have their own CLI found in "microservices/clients". 
+
 First time setup
 ================
 
