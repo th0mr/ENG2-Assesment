@@ -1,4 +1,4 @@
-# ENG2-Assessment
+# UOY Microservices Assessment
 
 An implementation of a Docker Compose mock video service done through three Micronaut microservices using Kafka events and topics to communicate between them.
 
